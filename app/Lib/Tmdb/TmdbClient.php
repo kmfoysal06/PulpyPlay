@@ -4,8 +4,8 @@ namespace App\Lib\Tmdb;
 
 use App\Lib\Tmdb\Exceptions\TmdbClientException;
 use App\Lib\Tmdb\Interfaces\ITmdbClient;
-use Spark\Helpers\HttpRequest;
-use Spark\Helpers\HttpResponse;
+use Spark\Http\Client\HttpRequest;
+use Spark\Http\Client\HttpResponse;
 
 /**
  * This is a Helper Class to help fetch data from TMDB

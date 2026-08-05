@@ -115,7 +115,7 @@ class EmbedConfigurator implements IEmbedConfigurator
     public function getSchema(): array
     {
         return $this->schema ??= collect(
-            require root_dir('bootstrap/embeds.php')
+            config('embeds', [])
         )
             ->filter(
                 fn($embed) => (

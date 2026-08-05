@@ -327,7 +327,7 @@ class TailwindHelper
             'root' => '',
             'style' => '',
             'script' => '',
-            'vite' => vite()
+            'vite' => vite(['app.css', 'app.js']),
         ], $config);
     }
 

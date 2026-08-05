@@ -1,10 +1,11 @@
 import { defineConfig } from "vite";
 import path from "path";
 import tailwindcss from "@tailwindcss/vite";
+import fullReload from "vite-plugin-full-reload";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  plugins: [tailwindcss()],
+  plugins: [tailwindcss(), fullReload(["./resources/views/**/*.blade.php"])],
   base: mode === "production" ? "/build/" : "/",
   root: path.resolve(__dirname, "./resources/app"),
   server: {
@@ -16,7 +17,10 @@ export default defineConfig(({ mode }) => ({
     emptyOutDir: true,
     manifest: true,
     rollupOptions: {
-      input: path.resolve(__dirname, "./resources/app/app.js"),
+      input: [
+        path.resolve(__dirname, "./resources/app/app.js"),
+        path.resolve(__dirname, "./resources/app/app.css"),
+      ],
     },
   },
   resolve: {
