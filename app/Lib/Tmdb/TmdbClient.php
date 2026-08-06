@@ -309,7 +309,7 @@ class TmdbClient implements ITmdbClient
             // Set the Content-Type header to JSON
             ->withHeader('Content-Type', 'application/json;charset=utf-8')
             // Set the Authorization header with the API key
-            ->withHeader('Authorization', sprintf('Bearer %s', config('TMDB_API_KEY')))
+            ->withHeader('Authorization', sprintf('Bearer %s', env('TMDB_API_KEY')))
             ->execute(); // Execute the request and get the response
 
         // If the request failed, throw an exception
