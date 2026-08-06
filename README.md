@@ -18,9 +18,9 @@ CoPlay is a free PHP application that brings the world of movies, TV series, ani
 
 
 ## Getting Started
-1. **Download CoPlay:** [CoPlay Latest Version](https://github.com/vulcanphp/coplay/releases/latest)
+1. **Download CoPlay:** [CoPlay Latest Version](https://github.com/shahinmoyshan/coplay/releases/latest)
 2. **Unzip:** After downloading the CoPlay zip extract the source files on you project root directory.
-3. **Create env.php:** Create a env.php file from copying env.example.php or replace it to env.php. 
+3. **Create .env:** Create a .env file from copying .env.example or replace it to .env. 
 4. **Install:** Run the following spark commands to install composer dependencies and generate a app key. 
     ```php
     // Install dependencies 
@@ -30,8 +30,9 @@ CoPlay is a free PHP application that brings the world of movies, TV series, ani
     php spark key:generate
     npm i && npm run build && rm -rf node_modules
    ```
-5. **Configuation:** open env.php file and replace TMDB Api Key and also theme and CMS settings.
-6. **Start the Application:**
+5. *TMDB API KEY:* Get your TMDB API key from https://www.themoviedb.org example key: (eyJhbGciOiJIUzI1NiJ9.dfdfsdf99sdf...).
+6. **Configuation:** open .env file and replace *TMDB_API_KEY* Key and also theme and CMS settings.
+7. **Start the Application:**
     - **Production Server:** For Apache Server Just Hit your domain and it will open the CoPlay Application.
     - **Development Server:**
     ```bash
@@ -44,6 +45,6 @@ CoPlay is a free PHP application that brings the world of movies, TV series, ani
 **Note:** For Non-Apache Production Server, Make Sure Your Server Redirect all Http Request to public folder.
 
 ## Report an Issue
-For additional support, feel free to [open a new issue](https://github.com/vulcanphp/coplay/issues) with a detailed description of the problem you are facing. I will be happy to assist you.
+For additional support, feel free to [open a new issue](https://github.com/shahinmoyshan/coplay/issues) with a detailed description of the problem you are facing. I will be happy to assist you.
 
 Enjoy your entertainment journey with CoPlay!
