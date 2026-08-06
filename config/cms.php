@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'CoPlay', // Site title
+    'title' => env('APP_NAME', 'CoPlay'), // Site title
     'tagline' => 'Stream Free Movies & TV Series Online', // Site tagline
     'intro' => 'Welcome to CoPlay, Free Streaming Platform', // Site intro
     'description' => 'Stream Free Movies, TV Series, Anime, and Drama Online with HD Quality. Watch Anywhere Anytime in CoPlay.', // Site description

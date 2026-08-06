@@ -12,7 +12,7 @@
 
 <!-- @Top Buttons for Server and Episodes -->
 <div
-    class="hidden group-hover:flex items-center absolute z-40 bg-accent-400 font-semibold text-lg w-max top-0 inset-x-0 mx-auto rounded-b-xl">
+    class="md:hidden md:group-hover:flex items-center absolute z-40 bg-accent-400 font-semibold text-lg w-max top-0 inset-x-0 mx-auto rounded-b-xl">
     <button @click="serverOpen = true" :class="!isTv && 'rounded-br-xl'"
         class="flex items-center rounded-bl-xl hover:bg-accent-500 px-3 py-1 md:text-xl md:px-5 md:py-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-7 md:h-7" viewBox="0 0 24 24">
