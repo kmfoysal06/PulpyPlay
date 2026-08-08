@@ -1,11 +1,15 @@
 @php
-
     $isTv = isset($video->name) && !isset($video->title);
     $title = $isTv ? $video->name : $video->title;
 
     $title = "Watch $title Free Online in " . cms('title');
 
     $original_title = $isTv ? $video->original_name : $video->original_title;
+
+    $releaseDateString = $isTv ? $video->first_air_date ?? null : $video->release_date ?? null;
+
+    $isInFuture = strtotime($releaseDateString) > time();
+
     $runtime =
         $isTv && !empty($video->episode_run_time)
             ? array_sum($video->episode_run_time) / count($video->episode_run_time)
@@ -32,6 +36,8 @@
     $this->share('title', $title);
     $this->share('original_title', $original_title);
     $this->share('runtime', $runtime);
+    $this->share('releaseDateString', $releaseDateString);
+    $this->share('isInFuture', $isInFuture);
 @endphp
 
 @section('title', $title)
@@ -58,6 +64,45 @@
 
     </main>
     <script>
+        function countdownTimer(targetDateStr) {
+            return {
+                targetTimestamp: new Date(targetDateStr).getTime(),
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0,
+                isExpired: false,
+                timer: null,
+
+                init() {
+                    this.update();
+                    this.timer = setInterval(() => {
+                        this.update();
+                    }, 1000);
+                },
+
+                update() {
+                    const now = new Date().getTime();
+                    const diff = this.targetTimestamp - now;
+
+                    if (diff <= 0) {
+                        this.isExpired = true;
+                        this.days = 0;
+                        this.hours = 0;
+                        this.minutes = 0;
+                        this.seconds = 0;
+                        clearInterval(this.timer);
+                        return;
+                    }
+
+                    this.days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    this.hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    this.minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    this.seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                }
+            };
+        }
+
         function videoInfo() {
             return {
                 isPlaying: false,

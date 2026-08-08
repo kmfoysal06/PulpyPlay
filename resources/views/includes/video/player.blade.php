@@ -5,18 +5,61 @@
         ? "season: Alpine.\$persist({$video->number_of_seasons}).using(sessionStorage).as(\"se_{$video->id}\"),"
         : '' !!}
     frameUrl() {
-    return "{{ route_url('embed', ['type' => $isTv ? 'tv' : 'movie', 'id' => $video->id]) }}" + "?related=1&remember=1" {{ $isTv
-        ? '+
-                    "&season=" + this.season'
-        : '' }}
+        return "{{ route_url('embed', ['type' => $isTv ? 'tv' : 'movie', 'id' => $video->id]) }}" + "?related=1&remember=1" {{ $isTv ? '+"&season=" + this.season' : '' }}
     },
 }'>
-    <button x-show="!isLoading && !isPlaying" @click="playMovie(frameUrl())" x-cloak
-        class="px-2 rounded-md position-center bg-primary-900 shadow-lg shadow-primary-950 z-30">
-        <svg xmlns="http://www.w3.org/2000/svg" class="text-accent-400" width="42" height="42" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M7 6v12l10-6z"></path>
-        </svg>
-    </button>
+    @if (isset($isInFuture) && $isInFuture)
+        <div x-data="countdownTimer('{{ $releaseDateString }}')" class="w-full h-full">
+            <template x-if="!isExpired">
+                <div
+                    class="z-30 w-full h-full relative justify-center flex flex-col items-center bg-primary-900/20 rounded-md shadow-2xl backdrop-blur-sm text-center">
+                    <span class="text-accent-400 text-sm font-semibold uppercase tracking-wider block mb-2">Releasing
+                        In</span>
+                    <div class="flex items-center space-x-3 text-center">
+                        <div class="bg-primary-950 px-3 py-2 rounded-lg border border-primary-800">
+                            <span class="text-2xl font-bold text-white" x-text="days">00</span>
+                            <span class="block text-[10px] text-primary-400 uppercase font-medium">Days</span>
+                        </div>
+                        <span class="text-xl font-bold text-primary-400">:</span>
+                        <div class="bg-primary-950 px-3 py-2 rounded-lg border border-primary-800">
+                            <span class="text-2xl font-bold text-white"
+                                x-text="String(hours).padStart(2, '0')">00</span>
+                            <span class="block text-[10px] text-primary-400 uppercase font-medium">Hours</span>
+                        </div>
+                        <span class="text-xl font-bold text-primary-400">:</span>
+                        <div class="bg-primary-950 px-3 py-2 rounded-lg border border-primary-800">
+                            <span class="text-2xl font-bold text-white"
+                                x-text="String(minutes).padStart(2, '0')">00</span>
+                            <span class="block text-[10px] text-primary-400 uppercase font-medium">Mins</span>
+                        </div>
+                        <span class="text-xl font-bold text-primary-400">:</span>
+                        <div class="bg-primary-950 px-3 py-2 rounded-lg border border-primary-800">
+                            <span class="text-2xl font-bold text-white"
+                                x-text="String(seconds).padStart(2, '0')">00</span>
+                            <span class="block text-[10px] text-primary-400 uppercase font-medium">Secs</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template x-if="!isLoading && !isPlaying && isExpired">
+                <button @click="playMovie(frameUrl())" x-cloak
+                    class="px-2 rounded-md position-center bg-primary-900 shadow-lg shadow-primary-950 z-30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="text-accent-400" width="42" height="42"
+                        viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M7 6v12l10-6z"></path>
+                    </svg>
+                </button>
+            </template>
+        </div>
+    @else
+        <button x-show="!isLoading && !isPlaying" @click="playMovie(frameUrl())" x-cloak
+            class="px-2 rounded-md position-center bg-primary-900 shadow-lg shadow-primary-950 z-30">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-accent-400" width="42" height="42"
+                viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7 6v12l10-6z"></path>
+            </svg>
+        </button>
+    @endif
     <div x-show="isLoading" x-cloak class="position-center z-30">
         <svg class="animate-spin -ml-1 mr-3 text-primary-50" xmlns="http://www.w3.org/2000/svg" fill="none"
             width="40" height="40" viewBox="0 0 24 24">
@@ -31,7 +74,7 @@
         class="absolute z-20 inset-0 w-full h-full bx-shadow"></div>
     <img :class="isPlaying && 'sm:blur-sm'" class="absolute inset-0 w-full h-full object-cover z-10"
         src="{{ $video->getImageUrl('w1280') . $video->backdrop_path }}" alt="">
-    <div x-show="isPlaying" x-cloak class="group container px-0 z-20 w-full h-full absolute inset-0">
+    <div x-show="isPlaying" x-cloak class="group container px-0 z-30 w-full h-full absolute inset-0">
         <button @click="cancelPlay()" x-show="closePlayer" x-cloak
             class="hidden group-hover:block absolute z-30 top-0 md:top-1 right-2 sm:right-5 md:right-10 p-1 md:p-2 hover:text-primary-300 left-auto text-primary-200">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
