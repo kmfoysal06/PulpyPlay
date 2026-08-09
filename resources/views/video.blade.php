@@ -10,7 +10,6 @@
         ? ($video->first_air_date ?? null)
         : ($video->release_date ?? null);
 
-
     $isInFuture = strtotime($releaseDateString ) > time();
 
     $runtime =
@@ -39,6 +38,8 @@
     $this->share('title', $title);
     $this->share('original_title', $original_title);
     $this->share('runtime', $runtime);
+    $this->share('releaseDateString', $releaseDateString);
+    $this->share('isInFuture', $isInFuture);
 @endphp
 
 @section('title', $title)
