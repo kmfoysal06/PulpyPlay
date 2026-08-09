@@ -11,14 +11,6 @@
         : '' }}
     },
 }'>
-@php
-$releaseDateString = $isTv
-        ? ($video->first_air_date ?? null)
-        : ($video->release_date ?? null);
-$isInFuture = strtotime($releaseDateString ) > time();
-
-@endphp
-
    @if(isset($isInFuture) && $isInFuture)
         <div x-data="countdownTimer('{{ $releaseDateString }}')"
              class="z-30 w-100 h-full relative justify-center flex flex-col items-center bg-primary-900/90 rounded-md shadow-2xl backdrop-blur-md">
