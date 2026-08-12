@@ -41,3 +41,4 @@ jobs:
           password: ${{ secrets.password }}
           exclude: |
             **/config/**
+            resources/views/layout/footer.blade.php
